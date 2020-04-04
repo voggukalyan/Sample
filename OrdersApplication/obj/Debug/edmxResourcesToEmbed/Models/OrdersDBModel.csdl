@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MalliGoldModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AmountTransaction">
+    <Key>
+      <PropertyRef Name="TransactionsId" />
+    </Key>
+    <Property Name="TransactionsId" Type="Int32" Nullable="false" />
+    <Property Name="TotalAmount" Type="Int32" />
+    <Property Name="FirstAdvance" Type="Int32" />
+    <Property Name="SecondAdvance" Type="Int32" />
+    <Property Name="OrderNo" Type="Int32" />
+    <NavigationProperty Name="OrderDetail" Relationship="Self.FK__AmountTra__Order__173876EA" FromRole="AmountTransactions" ToRole="OrderDetails" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="OrderNo" />
+    </Key>
+    <Property Name="OrderNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PhoneNO" Type="Int64" />
+    <Property Name="Item" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="EstimatedWeight" Type="Decimal" Precision="38" Scale="10" />
+    <Property Name="Wastage" Type="Int32" />
+    <NavigationProperty Name="AmountTransactions" Relationship="Self.FK__AmountTra__Order__173876EA" FromRole="OrderDetails" ToRole="AmountTransactions" />
+  </EntityType>
+  <Association Name="FK__AmountTra__Order__173876EA">
+    <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="0..1" />
+    <End Role="AmountTransactions" Type="Self.AmountTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderDetails">
+        <PropertyRef Name="OrderNo" />
+      </Principal>
+      <Dependent Role="AmountTransactions">
+        <PropertyRef Name="OrderNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MalliGoldEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AmountTransactions" EntityType="Self.AmountTransaction" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+    <AssociationSet Name="FK__AmountTra__Order__173876EA" Association="Self.FK__AmountTra__Order__173876EA">
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+      <End Role="AmountTransactions" EntitySet="AmountTransactions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

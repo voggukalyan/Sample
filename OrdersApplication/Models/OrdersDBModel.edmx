@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MalliGoldModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AmountTransactions">
+          <Key>
+            <PropertyRef Name="TransactionsId" />
+          </Key>
+          <Property Name="TransactionsId" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="int" />
+          <Property Name="FirstAdvance" Type="int" />
+          <Property Name="SecondAdvance" Type="int" />
+          <Property Name="OrderNo" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderNo" />
+          </Key>
+          <Property Name="OrderNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="PhoneNO" Type="bigint" />
+          <Property Name="Item" Type="varchar" MaxLength="30" />
+          <Property Name="EstimatedWeight" Type="numeric" Precision="38" Scale="10" />
+          <Property Name="Wastage" Type="int" />
+        </EntityType>
+        <Association Name="FK__AmountTra__Order__173876EA">
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="0..1" />
+          <End Role="AmountTransactions" Type="Self.AmountTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderDetails">
+              <PropertyRef Name="OrderNo" />
+            </Principal>
+            <Dependent Role="AmountTransactions">
+              <PropertyRef Name="OrderNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MalliGoldModelStoreContainer">
+          <EntitySet Name="AmountTransactions" EntityType="Self.AmountTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AmountTra__Order__173876EA" Association="Self.FK__AmountTra__Order__173876EA">
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+            <End Role="AmountTransactions" EntitySet="AmountTransactions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MalliGoldModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AmountTransaction">
+          <Key>
+            <PropertyRef Name="TransactionsId" />
+          </Key>
+          <Property Name="TransactionsId" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Int32" />
+          <Property Name="FirstAdvance" Type="Int32" />
+          <Property Name="SecondAdvance" Type="Int32" />
+          <Property Name="OrderNo" Type="Int32" />
+          <NavigationProperty Name="OrderDetail" Relationship="Self.FK__AmountTra__Order__173876EA" FromRole="AmountTransactions" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderNo" />
+          </Key>
+          <Property Name="OrderNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNO" Type="Int64" />
+          <Property Name="Item" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="EstimatedWeight" Type="Decimal" Precision="38" Scale="10" />
+          <Property Name="Wastage" Type="Int32" />
+          <NavigationProperty Name="AmountTransactions" Relationship="Self.FK__AmountTra__Order__173876EA" FromRole="OrderDetails" ToRole="AmountTransactions" />
+        </EntityType>
+        <Association Name="FK__AmountTra__Order__173876EA">
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="0..1" />
+          <End Role="AmountTransactions" Type="Self.AmountTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderDetails">
+              <PropertyRef Name="OrderNo" />
+            </Principal>
+            <Dependent Role="AmountTransactions">
+              <PropertyRef Name="OrderNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MalliGoldEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AmountTransactions" EntityType="Self.AmountTransaction" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <AssociationSet Name="FK__AmountTra__Order__173876EA" Association="Self.FK__AmountTra__Order__173876EA">
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+            <End Role="AmountTransactions" EntitySet="AmountTransactions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MalliGoldModelStoreContainer" CdmEntityContainer="MalliGoldEntities1">
+          <EntitySetMapping Name="AmountTransactions">
+            <EntityTypeMapping TypeName="MalliGoldModel.AmountTransaction">
+              <MappingFragment StoreEntitySet="AmountTransactions">
+                <ScalarProperty Name="TransactionsId" ColumnName="TransactionsId" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="FirstAdvance" ColumnName="FirstAdvance" />
+                <ScalarProperty Name="SecondAdvance" ColumnName="SecondAdvance" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="MalliGoldModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PhoneNO" ColumnName="PhoneNO" />
+                <ScalarProperty Name="Item" ColumnName="Item" />
+                <ScalarProperty Name="EstimatedWeight" ColumnName="EstimatedWeight" />
+                <ScalarProperty Name="Wastage" ColumnName="Wastage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

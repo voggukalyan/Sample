@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MalliGoldModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AmountTransactions">
+    <Key>
+      <PropertyRef Name="TransactionsId" />
+    </Key>
+    <Property Name="TransactionsId" Type="int" Nullable="false" />
+    <Property Name="TotalAmount" Type="int" />
+    <Property Name="FirstAdvance" Type="int" />
+    <Property Name="SecondAdvance" Type="int" />
+    <Property Name="OrderNo" Type="int" />
+  </EntityType>
+  <EntityType Name="OrderDetails">
+    <Key>
+      <PropertyRef Name="OrderNo" />
+    </Key>
+    <Property Name="OrderNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PhoneNO" Type="bigint" />
+    <Property Name="Item" Type="varchar" MaxLength="30" />
+    <Property Name="EstimatedWeight" Type="numeric" Precision="38" Scale="10" />
+    <Property Name="Wastage" Type="int" />
+  </EntityType>
+  <Association Name="FK__AmountTra__Order__173876EA">
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="0..1" />
+    <End Role="AmountTransactions" Type="Self.AmountTransactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderDetails">
+        <PropertyRef Name="OrderNo" />
+      </Principal>
+      <Dependent Role="AmountTransactions">
+        <PropertyRef Name="OrderNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MalliGoldModelStoreContainer">
+    <EntitySet Name="AmountTransactions" EntityType="Self.AmountTransactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__AmountTra__Order__173876EA" Association="Self.FK__AmountTra__Order__173876EA">
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+      <End Role="AmountTransactions" EntitySet="AmountTransactions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

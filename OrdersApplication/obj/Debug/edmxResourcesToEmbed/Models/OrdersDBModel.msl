@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MalliGoldModelStoreContainer" CdmEntityContainer="MalliGoldEntities1">
+    <EntitySetMapping Name="AmountTransactions">
+      <EntityTypeMapping TypeName="MalliGoldModel.AmountTransaction">
+        <MappingFragment StoreEntitySet="AmountTransactions">
+          <ScalarProperty Name="TransactionsId" ColumnName="TransactionsId" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="FirstAdvance" ColumnName="FirstAdvance" />
+          <ScalarProperty Name="SecondAdvance" ColumnName="SecondAdvance" />
+          <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetails">
+      <EntityTypeMapping TypeName="MalliGoldModel.OrderDetail">
+        <MappingFragment StoreEntitySet="OrderDetails">
+          <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PhoneNO" ColumnName="PhoneNO" />
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="EstimatedWeight" ColumnName="EstimatedWeight" />
+          <ScalarProperty Name="Wastage" ColumnName="Wastage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
